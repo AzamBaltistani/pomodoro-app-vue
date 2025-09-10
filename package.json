@@ -1,6 +1,5 @@
 {
   "name": "pomodoro-timer",
-  "homepage": "https://AzamBaltistani.github.io/pomodoro-app-vue/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
