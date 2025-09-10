@@ -13,10 +13,12 @@ const timeLeft = ref(timerStore.presets['pomodoro'])
 const isRunning = ref(false)
 let intervalId: number | null = null
 
+type PresetType = keyof typeof timerStore.presets // "pomodoro" | "short" | "long"
+
 watch(
     () => route.query.type,
     (newType) => {
-        const type = (newType as string) || 'pomodoro'
+        const type = (newType as PresetType) || 'pomodoro'
         resetTimer(type)
     },
     { immediate: true }
@@ -52,7 +54,7 @@ function toggleTimer() {
     isRunning.value ? stopTimer() : startTimer()
 }
 
-function resetTimer(type: string) {
+function resetTimer(type: PresetType) {
     stopTimer()
     timeLeft.value = timerStore.presets[type] ?? timerStore.presets['pomodoro']
 }
@@ -82,7 +84,7 @@ onUnmounted(() => stopTimer())
                 {{ isRunning ? 'Stop' : 'Start' }}
             </button>
 
-            <button @click="resetTimer((route.query.type as string) || 'pomodoro')"
+            <button @click="resetTimer((route.query.type as PresetType) || 'pomodoro')"
                 class="p-2 md:p-3 lg:p-3 rounded-full text-black dark:text-white transition hover:-rotate-12">
                 <RotateCcw class="w-2 h-2 md:w-4 md:h-4 lg:w-6 lg:h-6" />
             </button>
